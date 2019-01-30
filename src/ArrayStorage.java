@@ -4,35 +4,31 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
+    private int size;
     private Resume[] storage = new Resume[10000];
 
     void clear() {
-        // check array for existing "uuids" and swap them to "null".
-        int size = 0;
-        for (Resume value : storage) {
-            if (value != null) {
-                size++;
-            } else {
-                break;
-            }
-        }
-        for (int i = 0; i < size ; i++) {
+        //Swap existing "uuids" to "null".
+        int steps = size;
+        for (int i = 0; i < steps; i++) {
             storage[i] = null;
+            size--;
         }
     }
 
     void save(Resume resume) {
-        // search for first "null" value in array and swap "null" to "resume".
+        //Search for first "null" value inside array and swap "null" to "resume".
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = resume;
+                size++;
                 break;
             }
         }
     }
 
     Resume get(String uuid) {
-        //search in array for "uuid". If "uuid" is found, return "uuid" as result value. In case when "uuid" is not found, catch exception and show "error" msg.
+        //Search inside array for "uuid". If "uuid" is found, return "uuid" as result value. In case when "uuid" is not found, catch exception and show "error" msg.
         Resume result = null;
         try {
             for (Resume value : storage) {
@@ -48,17 +44,8 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        //check array for existing "uuids" and swap them to "null". After "sort" array to move "null" value to the end.
-        int size = 0;
-        for (Resume value : storage) {
-            if (value != null) {
-                size++;
-            } else {
-                break;
-            }
-        }
-
-        for (int i = 0; i < storage.length ; i++) {
+        //Swap existing "uuids" to "null". After "sort" array to move "null" value to the end.
+        for (int i = 0; i < size ; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
                 break;
@@ -73,7 +60,7 @@ public class ArrayStorage {
                 storage[i + 1] = nullValue;
             }
         }
-
+        size--;
     }
 
     /**
@@ -81,27 +68,11 @@ public class ArrayStorage {
      */
 
     Resume[] getAll() {
-        int size = 0;
-        for (Resume value : storage) {
-            if (value != null) {
-                size++;
-            } else {
-                break;
-            }
-        }
         return Arrays.copyOfRange(storage, 0, size);
     }
 
     int size() {
-        //check array for existing "uuids" and return size.
-        int size = 0;
-        for (Resume value : storage ){
-            if (value != null) {
-                size++;
-            } else {
-                break;
-            }
-        }
+        //Return amount of resumes inside array.
         return size;
     }
 }
