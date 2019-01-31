@@ -9,22 +9,18 @@ public class ArrayStorage {
 
     void clear() {
         //Swap existing "uuids" to "null".
-        int steps = size;
-        for (int i = 0; i < steps; i++) {
+        for (int i = 0; i < size; i++) {
             storage[i] = null;
-            size--;
         }
+        size = 0;
     }
 
     void save(Resume resume) {
         //Search for first "null" value inside array and swap "null" to "resume".
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                storage[i] = resume;
-                size++;
-                break;
-            }
+        for (int i = size; i < storage.length; i++) {
+            storage[i] = resume;
         }
+        size++;
     }
 
     Resume get(String uuid) {
@@ -60,7 +56,12 @@ public class ArrayStorage {
                 storage[i + 1] = nullValue;
             }
         }
-        size--;
+
+        for (int i = 0; i < size; i++) {
+            if (storage[i] == null) {
+                size--;
+            }
+        }
     }
 
     /**
