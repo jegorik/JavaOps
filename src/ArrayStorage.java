@@ -17,7 +17,7 @@ public class ArrayStorage {
     }
 
     void save(Resume resume) {
-        //Search for first "null" value inside array and swap "null" to "resume".
+        //Add "resume" to array. Increment size.
         storage[size] = resume;
         size++;
     }
@@ -41,18 +41,17 @@ public class ArrayStorage {
         //Swap existing "uuids" to "null". After "sort" array to move "null" value to the end.
         boolean uuidExist = false;
         for (int i = 0; i < size; i++) {
-            Resume nullValue;
             if (storage[i].uuid.equals(uuid)) {
+                Resume temp;
                 uuidExist = true;
-                nullValue = storage[i];
-                storage[i] = storage[i + 1];
-                storage[i + 1] = nullValue;
+                temp = storage[size-1];
+                storage[size-1] = null;
+                storage[i] = temp;
+                size--;
             }
         }
-        if (uuidExist) {
-            storage[size - 1] = null;
-            size--;
-        } else {
+
+        if (!uuidExist) {
             System.out.println(uuid + " don't exist.");
         }
     }
