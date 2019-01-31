@@ -17,7 +17,7 @@ public class ArrayStorage {
 
     void save(Resume resume) {
         //Search for first "null" value inside array and swap "null" to "resume".
-        for (int i = size; i < storage.length; i++) {
+        for (int i = size; i <= size; i++) {
             storage[i] = resume;
         }
         size++;
@@ -27,10 +27,9 @@ public class ArrayStorage {
         //Search inside array for "uuid". If "uuid" is found, return "uuid" as result value. In case when "uuid" is not found, catch exception and show "error" msg.
         Resume result = null;
         try {
-            for (Resume value : storage) {
-                if (value.uuid.equals(uuid)) {
-                    result = value;
-                    break;
+            for (int i = 0; i < size; i++) {
+                if (storage[i].uuid.equals(uuid)) {
+                    result = storage[i];
                 }
             }
         } catch (NullPointerException exception) {
@@ -44,7 +43,6 @@ public class ArrayStorage {
         for (int i = 0; i < size ; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
-                break;
             }
         }
 
