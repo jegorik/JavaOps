@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+
 /**
  * Array based storage for Resumes
  */
@@ -17,9 +18,7 @@ public class ArrayStorage {
 
     void save(Resume resume) {
         //Search for first "null" value inside array and swap "null" to "resume".
-        for (int i = size; i <= size; i++) {
-            storage[i] = resume;
-        }
+        storage[size] = resume;
         size++;
     }
 
@@ -40,25 +39,21 @@ public class ArrayStorage {
 
     void delete(String uuid) {
         //Swap existing "uuids" to "null". After "sort" array to move "null" value to the end.
-        for (int i = 0; i < size ; i++) {
-            if (storage[i].uuid.equals(uuid)) {
-                storage[i] = null;
-            }
-        }
-
-        for (int i = 0; i < size-1; i++) {
+        boolean uuidExist = false;
+        for (int i = 0; i < size; i++) {
             Resume nullValue;
-            if (storage[i] == null & storage[i+1] != null) {
+            if (storage[i].uuid.equals(uuid)) {
+                uuidExist = true;
                 nullValue = storage[i];
                 storage[i] = storage[i + 1];
                 storage[i + 1] = nullValue;
             }
         }
-
-        for (int i = 0; i < size; i++) {
-            if (storage[i] == null) {
-                size--;
-            }
+        if (uuidExist) {
+            storage[size - 1] = null;
+            size--;
+        } else {
+            System.out.println(uuid + " don't exist.");
         }
     }
 
