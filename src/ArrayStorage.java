@@ -42,11 +42,9 @@ public class ArrayStorage {
         boolean uuidExist = false;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                Resume temp;
                 uuidExist = true;
-                temp = storage[size-1];
+                storage[i] = storage[size-1];
                 storage[size-1] = null;
-                storage[i] = temp;
                 size--;
             }
         }
