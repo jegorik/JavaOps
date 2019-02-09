@@ -16,15 +16,14 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void update(Resume resume) {
+    void update(String uuid, Resume resume) {
         //Check for "resume". "Resume" exist? If "true" - update "resume".
         // If "false" - show error msg.
-        String result = checkResume(resume);
+        Resume result = checkUuid(uuid);
         if (result != null) {
-            int i = Integer.parseInt(result);
-            storage[i] = resume;
+            result = resume;
         } else {
-            System.out.println("ERROR: " + resume + " don't exist.");
+            System.out.println("ERROR: " + uuid + " don't exist.");
         }
     }
 
