@@ -32,7 +32,7 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
@@ -49,7 +49,7 @@ public class MainArray {
                     break;
                 case "update":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.update(uuid,r);
                     printAll();
                     break;
