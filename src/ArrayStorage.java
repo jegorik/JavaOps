@@ -14,19 +14,19 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void update(String uuid, Resume resume) {
-        int result = checkUuid(uuid);
-        if (result == -1) {
-            System.out.println("ERROR: " + uuid + " don't exist.");
+    public void update(Resume resume) {
+        int index = findIndex(resume.getUuid());
+        if (index == -1) {
+            System.out.println("ERROR: " + resume.getUuid() + " don't exist.");
         } else {
-            storage[result] = resume;
+            storage[index] = resume;
         }
     }
 
     public void save(Resume resume) {
         if (size < storage.length) {
-            int result = checkUuid(resume.getUuid());
-            if (result == -1) {
+            int index = findIndex(resume.getUuid());
+            if (index == -1) {
                 storage[size] = resume;
                 size++;
             } else {
@@ -38,19 +38,19 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int check = checkUuid(uuid);
-        if (check == -1) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             System.out.println("ERROR: " + uuid + " don't exist.");
             return null;
         } else {
-            return storage[check];
+            return storage[index];
         }
     }
 
     public void delete(String uuid) {
-        int result = checkUuid(uuid);
-        if (result != -1) {
-            storage[result]= storage[size - 1];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            storage[index]= storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else {
@@ -63,7 +63,6 @@ public class ArrayStorage {
      */
 
     public Resume[] getAll() {
-        //Show all resumes in storage;
         return Arrays.copyOfRange(storage, 0, size);
     }
 
@@ -71,14 +70,13 @@ public class ArrayStorage {
         return size;
     }
 
-    private int checkUuid(String uuid) {
-        int result = -1;
+    private int findIndex(String uuid) {
+        int index = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                result = i;
-                break;
+                return i;
             }
         }
-        return result;
+        return index;
     }
 }
