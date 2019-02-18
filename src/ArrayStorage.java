@@ -3,7 +3,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage implements Storage {
+public class ArrayStorage extends AbstractArrayStorage {
     private int size;
     private final int STORAGE_LIMIT = 10000;
     private Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -36,16 +36,6 @@ public class ArrayStorage implements Storage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index == -1) {
-            System.out.println("ERROR: " + uuid + " don't exist.");
-            return null;
-        } else {
-            return storage[index];
-        }
-    }
-
     public void delete(String uuid) {
         int index = findIndex(uuid);
         if (index != -1) {
@@ -65,11 +55,7 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int size() {
-        return size;
-    }
-
-    private int findIndex(String uuid) {
+    protected int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
