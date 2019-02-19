@@ -1,3 +1,7 @@
+package storage;
+
+import model.Resume;
+
 /**
  * Array based storage interface for Resumes
  */
@@ -19,5 +23,6 @@ public interface Storage {
      */
 
     Resume[] getAll();
+
     int size();
 }
