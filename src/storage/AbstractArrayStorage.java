@@ -1,6 +1,7 @@
 package storage;
 
 import model.Resume;
+
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
@@ -23,6 +24,19 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    public void save(Resume resume) {
+        if (size < STORAGE_LIMIT) {
+            int index = findIndex(resume.getUuid());
+            if (index < 0) {
+                saveResume(resume, index);
+            } else {
+                System.out.println("ERROR: " + resume + " already exist.");
+            }
+        } else {
+            System.out.println("No empty space in storage!");
+        }
+    }
+
     public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (index < 0) {
@@ -30,6 +44,15 @@ public abstract class AbstractArrayStorage implements Storage {
             return null;
         } else {
             return storage[index];
+        }
+    }
+
+    public void delete(String uuid) {
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            deleteResume(index);
+        } else {
+            System.out.println("ERROR: " + uuid + " don't exist.");
         }
     }
 
@@ -42,4 +65,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract int findIndex(String uuid);
+
+    protected abstract void saveResume(Resume resume, int index);
+
+    protected abstract void deleteResume(int index);
 }
