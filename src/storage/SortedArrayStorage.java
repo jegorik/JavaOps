@@ -11,17 +11,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int valueIndex = -index - 1;
         System.arraycopy(storage, valueIndex, storage, valueIndex + 1, size - valueIndex);
         storage[valueIndex] = resume;
-        size++;
     }
 
     @Override
     protected void deleteResume(int index) {
-        Resume[] tempStorage = new Resume[STORAGE_LIMIT - 1];
         int indexToRemove = size - index - 1;
-        System.arraycopy(storage, 0, tempStorage, 0, index);
-        System.arraycopy(storage, index + 1, tempStorage, index, indexToRemove);
-        size--;
-        storage = tempStorage;
+        System.arraycopy(storage, index + 1, storage, index, indexToRemove);
     }
 
     @Override
