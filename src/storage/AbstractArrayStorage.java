@@ -10,7 +10,7 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage implements Storage {
 
     int size;
-    private final int STORAGE_LIMIT = 10000;
+    protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     public void clear() {
@@ -18,16 +18,17 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void update(Resume resume) {
+    public Resume update(Resume resume) {
         int index = findIndex(resume.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
         }
+        return resume;
     }
 
-    public void save(Resume resume) {
+    public Resume save(Resume resume) {
         if (size < STORAGE_LIMIT) {
             int index = findIndex(resume.getUuid());
             if (index < 0) {
@@ -39,6 +40,7 @@ public abstract class AbstractArrayStorage implements Storage {
         } else {
             throw new StorageException("Storage is full", resume.getUuid());
         }
+        return resume;
     }
 
     public Resume get(String uuid) {
