@@ -9,9 +9,9 @@ public interface Storage {
 
     void clear();
 
-    Resume update(Resume resume);
+    void update(Resume resume);
 
-    Resume save(Resume resume);
+    void save(Resume resume);
 
     Resume get(String uuid);
 
