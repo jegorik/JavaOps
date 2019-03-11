@@ -1,5 +1,6 @@
 package storage;
 
+import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
@@ -11,12 +12,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     @Override
-    protected boolean checkSpace() {
-        return size < STORAGE_LIMIT;
-    }
-
-    @Override
-    protected void clearResume() {
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
@@ -27,24 +23,44 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume returnStorageIndex(int index) {
-        return storage[index];
+    protected void saveResume(Resume resume, int index) {
+        checkSpace();
+        if (checkSpace()) {
+            saveToArray(resume, index);
+            size++;
+        } else {
+            throw new StorageException("Storage is full", resume.getUuid());
+        }
     }
 
-    protected void incrementSize() {
-        size++;
-    }
-
-    protected void decrementSize() {
+    @Override
+    protected void deleteResume(int index) {
+        deleteFromArray(index);
         storage[size - 1] = null;
         size--;
     }
 
-    protected Resume[] getAllResumes() {
+    @Override
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected int getSize() {
+    @Override
+    public int size() {
         return size;
     }
+
+    @Override
+    protected Resume returnStorageIndex(int index) {
+        return storage[index];
+    }
+
+    protected boolean checkSpace() {
+        return size < STORAGE_LIMIT;
+    }
+
+    protected abstract void saveToArray(Resume resume, int index);
+
+    protected abstract void deleteFromArray(int index);
+
 }
