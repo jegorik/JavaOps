@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void saveResume(Resume resume, int index) {
-        if (checkSpace()) {
+        if (size < STORAGE_LIMIT) {
             saveToArray(resume, index);
             size++;
         } else {
@@ -52,10 +52,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected Resume returnStorageIndex(int index) {
         return storage[index];
-    }
-
-    protected boolean checkSpace() {
-        return size < STORAGE_LIMIT;
     }
 
     protected abstract void saveToArray(Resume resume, int index);
