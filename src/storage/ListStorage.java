@@ -2,8 +2,6 @@ package storage;
 
 import model.Resume;
 
-import java.util.Collections;
-
 public class ListStorage extends AbstractStorage {
 
     @Override
@@ -23,9 +21,12 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected int findIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        Collections.sort(storage);
-        return Collections.binarySearch(storage, searchKey);
+        for (int i = 0; i < storage.size(); i++) {
+            if (uuid.equals(storage.get(i).getUuid())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override

@@ -24,7 +24,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void saveResume(Resume resume, int index) {
-        checkSpace();
         if (checkSpace()) {
             saveToArray(resume, index);
             size++;
