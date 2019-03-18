@@ -2,6 +2,8 @@ import model.Resume;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
@@ -13,6 +15,7 @@ public class MainCollections {
 
     public static void main(String[] args) {
         ArrayList<Resume> collection = new ArrayList<>();
+        Map<Integer, String> mass = new TreeMap<>();
         collection.add(RESUME1);
         collection.add(RESUME2);
         collection.add(RESUME3);
@@ -32,7 +35,13 @@ public class MainCollections {
         System.out.println(collection.toString());
         System.out.println(collection.get(1));
         System.out.println(collection.indexOf(RESUME3));
-        collection.removeAll(collection);
+        collection.clear();
         System.out.println(collection);
+
+        mass.put(1, "val1");
+        mass.put(2, "val2");
+        mass.put(3, "val3");
+
+        System.out.println(mass.get(3));
     }
 }

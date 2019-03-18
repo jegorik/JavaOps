@@ -4,14 +4,7 @@ import exception.ExistStorageException;
 import exception.NotExistStorageException;
 import model.Resume;
 
-import java.util.ArrayList;
-
 public abstract class AbstractStorage implements Storage {
-    protected ArrayList<Resume> storage = new ArrayList<>();
-
-    public void clear() {
-        storage.clear();
-    }
 
     public void update(Resume resume) {
         int index = findIndex(resume.getUuid());
@@ -49,14 +42,12 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
-    }
 
+    public abstract void clear();
 
-    public int size() {
-        return storage.size();
-    }
+    public abstract Resume[] getAll();
+
+    public abstract int size();
 
     protected abstract int findIndex(String uuid);
 
