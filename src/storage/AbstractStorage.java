@@ -7,8 +7,8 @@ import model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
+        String index = findIndex(resume.getUuid());
+        if (checkIndex(index)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
             updateResume(index, resume);
@@ -16,8 +16,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
+        String index = findIndex(resume.getUuid());
+        if (checkIndex(index)) {
             saveResume(resume, index);
         } else {
             throw new ExistStorageException(resume.getUuid());
@@ -25,8 +25,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
+        String index = findIndex(uuid);
+        if (!checkIndex(index)) {
             deleteResume(index);
         } else {
             throw new NotExistStorageException(uuid);
@@ -34,12 +34,20 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
+        String index = findIndex(uuid);
+        if (checkIndex(index)) {
             throw new NotExistStorageException(uuid);
         } else {
             return returnStorageIndex(index);
         }
+    }
+
+    public int convertIndexToInt(String index) {
+        return Integer.parseInt(index);
+    }
+
+    public String convertIndexToString(int index) {
+        return Integer.toString(index);
     }
 
 
@@ -49,14 +57,16 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract int size();
 
-    protected abstract int findIndex(String uuid);
+    protected abstract String findIndex(String uuid);
 
-    protected abstract void saveResume(Resume resume, int index);
+    protected abstract boolean checkIndex(String index);
 
-    protected abstract void deleteResume(int index);
+    protected abstract void saveResume(Resume resume, String index);
 
-    protected abstract void updateResume(int index, Resume resume);
+    protected abstract void deleteResume(String index);
 
-    protected abstract Resume returnStorageIndex(int index);
+    protected abstract void updateResume(String index, Resume resume);
+
+    protected abstract Resume returnStorageIndex(String index);
 
 }

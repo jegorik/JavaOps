@@ -2,12 +2,11 @@ package storage;
 
 import model.Resume;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class MapStorage extends AbstractStorage {
-    private Map<Integer, Resume> storage = new TreeMap<>();
-    private int lastPositionIndex = 0;
+    private Map<String, Resume> storage = new HashMap<>();
 
     @Override
     public void clear() {
@@ -18,7 +17,7 @@ public class MapStorage extends AbstractStorage {
     public Resume[] getAll() {
         Resume[] temp = new Resume[storage.size()];
         int counter = 0;
-        for (Map.Entry<Integer, Resume> value : storage.entrySet()) {
+        for (Map.Entry<String, Resume> value : storage.entrySet()) {
             Resume resume = value.getValue();
             temp[counter] = resume;
             counter++;
@@ -32,35 +31,32 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected int findIndex(String uuid) {
-        for (Map.Entry<Integer, Resume> value : storage.entrySet()) {
-            Resume resume = value.getValue();
-            int position = value.getKey();
-            if (uuid.equals(resume.getUuid())) {
-                return value.getKey();
-            }
-        }
-        return -1;
+    protected String findIndex(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected void saveResume(Resume resume, int index) {
-        lastPositionIndex = (lastPositionIndex + (-(index)));
-        storage.put(lastPositionIndex, resume);
-    }
-
-    @Override
-    protected void deleteResume(int index) {
-        storage.remove(index);
-    }
-
-    @Override
-    protected void updateResume(int index, Resume resume) {
+    protected void saveResume(Resume resume, String index) {
         storage.put(index, resume);
     }
 
     @Override
-    protected Resume returnStorageIndex(int index) {
+    protected void deleteResume(String index) {
+        storage.remove(index);
+    }
+
+    @Override
+    protected void updateResume(String index, Resume resume) {
+        storage.put(index, resume);
+    }
+
+    @Override
+    protected Resume returnStorageIndex(String index) {
         return storage.get(index);
+    }
+
+    @Override
+    protected boolean checkIndex(String index) {
+        return !storage.containsKey(index);
     }
 }

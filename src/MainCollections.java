@@ -42,6 +42,6 @@ public class MainCollections {
         mass.put(2, "val2");
         mass.put(3, "val3");
 
-        System.out.println(mass.get(3));
+        System.out.println(mass.get(2));
     }
 }
