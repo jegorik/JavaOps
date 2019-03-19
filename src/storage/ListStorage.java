@@ -45,11 +45,16 @@ public class ListStorage extends AbstractStorage {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
     protected Resume returnStorageIndex(Object index) {
         return storage.get((int) index);
+    }
+
+    @Override
+    protected boolean notExist(Object index) {
+        return index == null;
     }
 }

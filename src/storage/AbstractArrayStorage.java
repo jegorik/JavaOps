@@ -54,6 +54,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(int) index];
     }
 
+    @Override
+    protected boolean notExist(Object index) {
+        return (int) index < 0;
+    }
+
     protected abstract void saveToArray(Resume resume, int index);
 
     protected abstract void deleteFromArray(int index);
