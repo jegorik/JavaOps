@@ -21,13 +21,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected String findIndex(String uuid) {
+    protected Object findIndex(String uuid) {
         Resume searchKey = new Resume(uuid);
-        return convertIndexToString(Arrays.binarySearch(storage, 0, size, searchKey));
+        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
     @Override
-    protected boolean checkIndex(String index) {
-        return convertIndexToInt(index) < 0;
+    protected boolean checkIndex(Object index) {
+        return (int) index < 0;
     }
 }

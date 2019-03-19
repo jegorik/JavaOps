@@ -23,37 +23,37 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(String index, Resume resume) {
-        storage.set(convertIndexToInt(index), resume);
+    protected void updateResume(Object index, Resume resume) {
+        storage.set((int) index, resume);
     }
 
     @Override
-    protected void saveResume(Resume resume, String index) {
+    protected void saveResume(Resume resume, Object index) {
         storage.add(resume);
     }
 
     @Override
-    protected void deleteResume(String index) {
-        storage.remove(convertIndexToInt(index));
+    protected void deleteResume(Object index) {
+        storage.remove((int) index);
     }
 
     @Override
-    protected String findIndex(String uuid) {
+    protected Object findIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid())) {
-                return convertIndexToString(i);
+                return i;
             }
         }
-        return "-1";
+        return -1;
     }
 
     @Override
-    protected Resume returnStorageIndex(String index) {
-        return storage.get(convertIndexToInt(index));
+    protected Resume returnStorageIndex(Object index) {
+        return storage.get((int) index);
     }
 
     @Override
-    protected boolean checkIndex(String index) {
-        return index.equals("-1");
+    protected boolean checkIndex(Object index) {
+        return (int) index == -1;
     }
 }

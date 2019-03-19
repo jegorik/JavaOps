@@ -18,14 +18,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(String index, Resume resume) {
-        storage[convertIndexToInt(index)] = resume;
+    protected void updateResume(Object index, Resume resume) {
+        storage[(int) index] = resume;
     }
 
     @Override
-    protected void saveResume(Resume resume, String index) {
+    protected void saveResume(Resume resume, Object index) {
         if (size < STORAGE_LIMIT) {
-            saveToArray(resume, convertIndexToInt(index));
+            saveToArray(resume, (int) index);
             size++;
         } else {
             throw new StorageException("Storage is full", resume.getUuid());
@@ -33,8 +33,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(String index) {
-        deleteFromArray(convertIndexToInt(index));
+    protected void deleteResume(Object index) {
+        deleteFromArray((int) index);
         storage[size - 1] = null;
         size--;
     }
@@ -50,8 +50,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume returnStorageIndex(String index) {
-        return storage[convertIndexToInt(index)];
+    protected Resume returnStorageIndex(Object index) {
+        return storage[(int) index];
     }
 
     protected abstract void saveToArray(Resume resume, int index);
