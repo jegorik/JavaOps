@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -86,6 +88,7 @@ public abstract class AbstractStorageTest {
     public void getAll() {
         Resume[] test = {RESUME1, RESUME2, RESUME3};
         Resume[] result = storage.getAll();
+        Arrays.sort(result);
         Assert.assertArrayEquals(test, result);
         Assert.assertEquals(3, result.length);
     }
