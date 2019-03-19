@@ -3,9 +3,10 @@ package storage;
 import model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    protected ArrayList<Resume> storage = new ArrayList<>();
+    protected List<Resume> storage = new ArrayList<>();
 
     @Override
     public void clear() {
@@ -50,10 +51,5 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected Resume returnStorageIndex(Object index) {
         return storage.get((int) index);
-    }
-
-    @Override
-    protected boolean checkIndex(Object index) {
-        return (int) index == -1;
     }
 }

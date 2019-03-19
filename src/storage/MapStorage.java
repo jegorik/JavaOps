@@ -15,13 +15,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        Resume[] temp = new Resume[storage.size()];
-        int counter = 0;
-        for (Map.Entry<String, Resume> value : storage.entrySet()) {
-            Resume resume = value.getValue();
-            temp[counter] = resume;
-            counter++;
-        }
+        Resume[] temp = storage.values().toArray(new Resume[0]);
         return temp;
     }
 
@@ -56,7 +50,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkIndex(Object index) {
+    protected boolean checkIndexCondition(Object index) {
         return !storage.containsKey(index);
     }
 }

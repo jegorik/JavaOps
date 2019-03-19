@@ -25,9 +25,4 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
-
-    @Override
-    protected boolean checkIndex(Object index) {
-        return (int) index < 0;
-    }
 }
