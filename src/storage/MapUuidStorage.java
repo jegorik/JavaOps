@@ -4,9 +4,11 @@ import model.Resume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class ListStorage extends AbstractStorage {
-    protected List<Resume> storage = new ArrayList<>();
+public class MapUuidStorage extends AbstractStorage {
+    private Map<String, Resume> storage = new TreeMap<>();
 
     @Override
     public void clear() {
@@ -15,7 +17,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public List<Resume> doCopyGetAll() {
-        return new ArrayList<>(storage);
+        return new ArrayList<>(storage.values());
     }
 
     @Override
@@ -24,37 +26,32 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Object searchKey, Resume resume) {
-        storage.set((int) searchKey, resume);
+    protected Object getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
     protected void doSave(Object searchKey, Resume resume) {
-        storage.add(resume);
+        storage.put((String) searchKey, resume);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        storage.remove((int) searchKey);
+        storage.remove(searchKey);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        for (int i = 0; i < storage.size(); i++) {
-            if (uuid.equals(storage.get(i).getUuid())) {
-                return i;
-            }
-        }
-        return null;
+    protected void doUpdate(Object searchKey, Resume resume) {
+        storage.put((String) searchKey, resume);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return storage.get((int) searchKey);
+        return storage.get(searchKey);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return storage.containsKey(searchKey);
     }
 }

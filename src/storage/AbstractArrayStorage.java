@@ -4,8 +4,15 @@ import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
+
+    protected abstract Integer getSearchKey(String uuid);
+
+    protected abstract void saveToArray(int index, Resume resume);
+
+    protected abstract void deleteFromArray(int index);
 
     int size;
     protected static final int STORAGE_LIMIT = 10000;
@@ -18,14 +25,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Object index, Resume resume) {
+    protected void doUpdate(Object index, Resume resume) {
         storage[(int) index] = resume;
     }
 
     @Override
-    protected void saveResume(Resume resume, Object index) {
+    protected void doSave(Object index, Resume resume) {
         if (size < STORAGE_LIMIT) {
-            saveToArray(resume, (int) index);
+            saveToArray((int) index, resume);
             size++;
         } else {
             throw new StorageException("Storage is full", resume.getUuid());
@@ -33,15 +40,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object index) {
+    protected void doDelete(Object index) {
         deleteFromArray((int) index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    public List<Resume> doCopyGetAll() {
+        Resume[] result = Arrays.copyOfRange(storage, 0, size);
+        return Arrays.asList(result);
     }
 
     @Override
@@ -50,17 +58,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume returnStorageIndex(Object index) {
+    protected Resume doGet(Object index) {
         return storage[(int) index];
     }
 
     @Override
-    protected boolean notExist(Object index) {
-        return (int) index < 0;
+    protected boolean isExist(Object index) {
+        return (int) index >= 0;
     }
-
-    protected abstract void saveToArray(Resume resume, int index);
-
-    protected abstract void deleteFromArray(int index);
 
 }
