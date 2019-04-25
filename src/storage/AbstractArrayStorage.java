@@ -6,7 +6,7 @@ import model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected abstract Integer getSearchKey(String uuid);
 
@@ -25,14 +25,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Object index, Resume resume) {
-        storage[(int) index] = resume;
+    protected void doUpdate(Integer index, Resume resume) {
+        storage[index] = resume;
     }
 
     @Override
-    protected void doSave(Object index, Resume resume) {
+    protected void doSave(Integer index, Resume resume) {
         if (size < STORAGE_LIMIT) {
-            saveToArray((int) index, resume);
+            saveToArray(index, resume);
             size++;
         } else {
             throw new StorageException("Storage is full", resume.getUuid());
@@ -40,8 +40,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(Object index) {
-        deleteFromArray((int) index);
+    protected void doDelete(Integer index) {
+        deleteFromArray(index);
         storage[size - 1] = null;
         size--;
     }
@@ -58,13 +58,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return storage[(int) index];
+    protected Resume doGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (int) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
 }

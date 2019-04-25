@@ -1,5 +1,7 @@
 package model;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,12 +13,16 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
+    private Map<Contacts, String> contacts = new EnumMap<>(Contacts.class);
+    private Map<SectionType, Section> sectionType = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "uuid must not be null");
+        Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -26,7 +32,15 @@ public class Resume implements Comparable<Resume> {
     }
 
     public String getFullName() {
-        return uuid;
+        return fullName;
+    }
+
+    public Map<Contacts, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, Section> getSectionType() {
+        return sectionType;
     }
 
     @Override
@@ -53,5 +67,4 @@ public class Resume implements Comparable<Resume> {
         int compareResult = fullName.compareTo(o.getFullName());
         return compareResult != 0 ? compareResult : uuid.compareTo(o.uuid);
     }
-
 }
