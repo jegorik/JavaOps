@@ -3,27 +3,27 @@ package model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class CompanyInfo {
-    private String companyName;
+public class Company {
+    private String name;
     private String specialization;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public CompanyInfo(String companyName, String specialization, String description, LocalDate startDate, LocalDate endDate) {
-        Objects.requireNonNull(companyName, "companyName must not be null");
+    public Company(String name, String specialization, String description, LocalDate startDate, LocalDate endDate) {
+        Objects.requireNonNull(name, "name must not be null");
         Objects.requireNonNull(specialization, "specialization must not be null");
         Objects.requireNonNull(startDate, "startDate must not be null");
         Objects.requireNonNull(endDate, "endDate must not be null");
-        this.companyName = companyName;
+        this.name = name;
         this.specialization = specialization;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getName() {
+        return name;
     }
 
     public String getSpecialization() {
@@ -46,8 +46,8 @@ public class CompanyInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CompanyInfo that = (CompanyInfo) o;
-        return companyName.equals(that.companyName) &&
+        Company that = (Company) o;
+        return name.equals(that.name) &&
                 specialization.equals(that.specialization) &&
                 description.equals(that.description) &&
                 startDate.equals(that.startDate) &&
@@ -56,13 +56,13 @@ public class CompanyInfo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(companyName, specialization, description, startDate, endDate);
+        return Objects.hash(name, specialization, description, startDate, endDate);
     }
 
     @Override
     public String toString() {
-        return "CompanyInfo{" +
-                "companyName='" + companyName + '\'' +
+        return "Company{" +
+                "name='" + name + '\'' +
                 ", specialization='" + specialization + '\'' +
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +

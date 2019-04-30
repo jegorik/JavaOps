@@ -21,28 +21,19 @@ public class ResumeTestData {
     */
     public static void main(String[] args) throws ParseException {
         Resume resume = new Resume("Григорий Кислин");
-        String mobilenumber = "+7(921) 855-0482";
-        String skype = "grigory.kislin";
-        String e_mail = "https://www.linkedin.com/in/gkislin";
-        String linkedIn = "https://www.linkedin.com/in/gkislin";
-        String gitHub = "https://github.com/gkislin";
-        String stackOverFlow = "https://stackoverflow.com/users/548473/gkislin";
-        String homePage = "http://gkislin.ru/";
 
-        Map<Contacts, String> contacts = resume.getContacts();
-        contacts.put(Contacts.PHONE_NUMBER, mobilenumber);
-        contacts.put(Contacts.SKYPE, skype);
-        contacts.put(Contacts.E_MAIL, e_mail);
-        contacts.put(Contacts.LINKEDIN, linkedIn);
-        contacts.put(Contacts.GITHUB, gitHub);
-        contacts.put(Contacts.STACKOVERFLOW, stackOverFlow);
-        contacts.put(Contacts.WEB_PAGE, homePage);
+        Map<ContactsType, String> contacts = resume.getContacts();
+        contacts.put(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
+        contacts.put(ContactsType.SKYPE, "grigory.kislin");
+        contacts.put(ContactsType.E_MAIL, "gkislin@yandex.ru");
+        contacts.put(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        contacts.put(ContactsType.GITHUB, "https://github.com/gkislin");
+        contacts.put(ContactsType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/gkislin");
+        contacts.put(ContactsType.WEB_PAGE, "http://gkislin.ru/");
 
-        Map<SectionType, Section> sectionType = resume.getSectionType();
-        StringInfo stringDataObjective = new StringInfo("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям.");
-        StringInfo stringDataPesonalSkills = new StringInfo("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        sectionType.put(SectionType.OBJECTIVE, stringDataObjective);
-        sectionType.put(SectionType.PERSONAL, stringDataPesonalSkills);
+        Map<SectionType, AbstractSection> sectionType = resume.getSectionType();
+        sectionType.put(SectionType.OBJECTIVE, new SimpleTextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям."));
+        sectionType.put(SectionType.PERSONAL, new SimpleTextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievements = new ArrayList<>();
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников. ");
@@ -53,8 +44,7 @@ public class ResumeTestData {
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django). ");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
 
-        ListInfo listDataAcievements = new ListInfo(achievements);
-        sectionType.put(SectionType.ACHIEVEMENT, listDataAcievements);
+        sectionType.put(SectionType.ACHIEVEMENT, new BilletedTextListSection(achievements));
 
         List<String> qualification = new ArrayList<>();
         qualification.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2 ");
@@ -75,8 +65,7 @@ public class ResumeTestData {
                 "проектрирования, архитектурных шаблонов, UML, функционального\n" +
                 "программирования ");
         qualification.add("Родной русский, английский \"upper intermediate\"");
-        ListInfo listDataQualification = new ListInfo(qualification);
-        sectionType.put(SectionType.QUALIFICATION, listDataQualification);
+        sectionType.put(SectionType.QUALIFICATION, new BilletedTextListSection(qualification));
 
 
         String date = "October 1, 2013";
@@ -84,38 +73,36 @@ public class ResumeTestData {
         LocalDate startDate = LocalDate.parse(date, formatter);
         date = "April 25, 2019";
         LocalDate endDate = LocalDate.parse(date, formatter);
-        CompanyInfo JAVA_ONLINE_PROJECTS = new CompanyInfo("Java Online Projects", "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", startDate, endDate);
+        Company JAVA_ONLINE_PROJECTS = new Company("Java Online Projects", "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", startDate, endDate);
 
         date = "October 1, 2014";
         startDate = LocalDate.parse(date, formatter);
         date = "January 1, 2016";
         endDate = LocalDate.parse(date, formatter);
-        CompanyInfo WRIKE = new CompanyInfo("Wrike", "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.", startDate, endDate);
+        Company WRIKE = new Company("Wrike", "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.", startDate, endDate);
 
 
-        List<CompanyInfo> workExperience = new ArrayList<>();
+        List<Company> workExperience = new ArrayList<>();
         workExperience.add(JAVA_ONLINE_PROJECTS);
         workExperience.add(WRIKE);
-        AdditionalInfo additionalInfoWorkExperience = new AdditionalInfo(workExperience);
-        sectionType.put(SectionType.EXPERIENCE, additionalInfoWorkExperience);
+        sectionType.put(SectionType.EXPERIENCE, new CompaniesSection(workExperience));
 
         date = "March 1, 2013";
         startDate = LocalDate.parse(date, formatter);
         date = "May 1, 2013";
         endDate = LocalDate.parse(date, formatter);
-        CompanyInfo COURSERA = new CompanyInfo("Coursera", "\"Functional Programming Principles in Scala\" by Martin Odersky", null, startDate, endDate);
+        Company COURSERA = new Company("Coursera", "\"Functional Programming Principles in Scala\" by Martin Odersky", null, startDate, endDate);
 
         date = "March 1, 2011";
         startDate = LocalDate.parse(date, formatter);
         date = "April 1, 2011";
         endDate = LocalDate.parse(date, formatter);
-        CompanyInfo LUXOFT = new CompanyInfo("Luxoft", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, startDate, endDate);
+        Company LUXOFT = new Company("Luxoft", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, startDate, endDate);
 
-        List<CompanyInfo> education = new ArrayList<>();
+        List<Company> education = new ArrayList<>();
         education.add(COURSERA);
         education.add(LUXOFT);
-        AdditionalInfo additionalInfoWorkEducation = new AdditionalInfo(education);
-        sectionType.put(SectionType.EDUCATION, additionalInfoWorkEducation);
+        sectionType.put(SectionType.EDUCATION, new CompaniesSection(education));
 
         ARRAY_STORAGE.save(resume);
         System.out.println(ARRAY_STORAGE.size());

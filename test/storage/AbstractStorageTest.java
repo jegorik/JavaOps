@@ -14,13 +14,15 @@ public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "dummy";
+    private static final String UUID_4 = "uuid4";
+    private static final String UUID_DUMMY = "UUID_DUMMY";
     private static final Resume RESUME1 = new Resume(UUID_1, "Name1");
-    private static final Resume RESUME2 = new Resume(UUID_2,"Name2");
+    private static final Resume RESUME2 = new Resume(UUID_2, "Name2");
     private static final Resume RESUME3 = new Resume(UUID_3, "Name3");
-    private static final Resume DUMMY = new Resume(UUID_4, "dummy");
+    private static final Resume RESUME4 = new Resume(UUID_4, "Name4");
+    private static final Resume DUMMY = new Resume(UUID_DUMMY, "UUID_DUMMY");
 
-    private Storage storage;
+    protected Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -41,8 +43,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID_4, "dummy"));
-        Assert.assertEquals(DUMMY, storage.get("dummy"));
+        storage.save(RESUME4);
+        Assert.assertEquals(RESUME4, storage.get("uuid4"));
         Assert.assertEquals(4, storage.size());
     }
 
@@ -60,7 +62,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume("TestName"));
+        storage.update(DUMMY);
     }
 
     @Test
@@ -70,7 +72,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
-        storage.get("test");
+        storage.get("UUID_DUMMY");
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -82,7 +84,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.delete("test");
+        storage.delete("UUID_DUMMY");
     }
 
     @Test

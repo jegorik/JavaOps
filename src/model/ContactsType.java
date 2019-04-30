@@ -1,6 +1,6 @@
 package model;
 
-public enum Contacts {
+public enum ContactsType {
     PHONE_NUMBER("Phone number"),
     SKYPE("Skype name"),
     E_MAIL("E-mail address"),
@@ -11,11 +11,12 @@ public enum Contacts {
 
     private String title;
 
+    ContactsType(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    Contacts(String title) {
-        this.title = title;
-    }
 }
